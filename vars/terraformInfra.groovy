@@ -37,11 +37,8 @@ def call(Map config = [:]){
             '''
         }
         withCredentials([
-        usernamePassword(
-            credentialsId: awsCredentialId,
-            usernameVariable: 'AWS_ACCESS_KEY_ID',
-            passwordVariable: 'AWS_SECRET_ACCESS_KEY'
-        )
+            [$class: 'AmazonWebServicesCredentialsBinding',
+            credentialsId: awsCredentialId]
         ]) {
 
         stage('Validate AWS Account') {
