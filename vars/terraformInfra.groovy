@@ -129,10 +129,11 @@ def call(Map config = [:]){
                     terraform output
                 '''
             }
-        } else {
             echo "terraform destroy completed successfully."
+        } 
+           
 
-        }
+        
     } catch(Exception e){
         echo "Error occurred: ${e.getMessage()}"
         currentBuild.result = 'FAILURE'
