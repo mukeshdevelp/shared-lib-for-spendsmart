@@ -11,7 +11,7 @@ def call(Map config = [:]){
     // access key and secret key
      def awsCredentialId = config.get(
         'awsCredentialId',
-        'aws-terraform'
+        'aws-creds'
     )
 
     if(!action){
@@ -61,11 +61,11 @@ def call(Map config = [:]){
             sh """ 
                 set -e
                 echo "Checking Terraform state bucket..." 
-                if aws s3api head-bucket --bucket "${stateBucket}" 2>/dev/null then
+                if aws s3api head-bucket --bucket "${stateBucketName}" 2>/dev/null; then
                     echo "Terraform state bucket already exists." 
                 else 
                     echo "Creating Terraform state bucket..." 
-                    aws s3api create-bucket  --bucket "${stateBucket}" -region "${stateRegion}" 
+                    aws s3api create-bucket  --bucket "${stateBucketName}" -region "${stateRegion}" 
                     echo "Terraform state bucket created."
                 fi 
             """ 
@@ -148,7 +148,7 @@ def call(Map config = [:]){
             echo "terraform destroy completed successfully."
         } 
            
-
+        }
         
     } catch(Exception e){
         echo "Error occurred: ${e.getMessage()}"
