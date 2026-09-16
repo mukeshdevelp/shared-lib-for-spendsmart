@@ -1,7 +1,7 @@
 def call(Map config = [:]){
     //configs
     def awsRegion = config.get('awsRegion' , 'us-east-1')
-    def terraformDir = config.get('terraformDir', 'spendsmart')
+    def terraformDir = config.get('terraformDir', '.')
     def stateBucketName = config.get('stateBucketName', '')
     def stateKey = config.get('stateKey', 'aws/infra/terraform.tfstate')
     def stateRegion = config.get('stateRegion', 'us-east-1')
