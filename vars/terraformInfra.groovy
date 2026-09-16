@@ -4,7 +4,7 @@ def call(Map config = [:]){
     def terraformDir = config.get('terraformDir', 'spendsmart')
     def stateBucketName = config.get('stateBucketName', '')
     def stateKey = config.get('stateKey', 'aws/infra/terraform.tfstate')
-    def stateRegion = config.get('awsRegion', 'us-east-1')
+    def stateRegion = config.get('stateRegion', 'us-east-1')
     
     // setting the action destroy or apply
     def action = params.TERRAFORM_ACTION
@@ -54,7 +54,7 @@ def call(Map config = [:]){
         }
 
         stage('Bootstrap Terraform Backend') {
-            if (!stateBucket?.trim()) { 
+            if (!stateBucketName?.trim()) { 
                 error( "stateBucket must be provided to the shared library." ) 
             } 
             
@@ -76,7 +76,7 @@ def call(Map config = [:]){
                 sh """
                     set -e
                     terraform init \
-                        -backend-config="bucket=${stateBucket}" \
+                        -backend-config="bucket=${stateBucketName}" \
                         -backend-config="key=${stateKey}" \
                         -backend-config="region=${stateRegion}"
                 """
