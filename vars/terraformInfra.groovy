@@ -8,6 +8,11 @@ def call(Map config = [:]){
     
     // setting the action destroy or apply
     def action = params.TERRAFORM_ACTION
+    // access key and secret key
+     def awsCredentialId = config.get(
+        'awsCredentialId',
+        'aws-terraform'
+    )
 
     if(!action){
         error("terrraform action is required")
@@ -31,12 +36,23 @@ def call(Map config = [:]){
                 aws --version
             '''
         }
-        stage('validate aws account'){
+        withCredentials([
+        usernamePassword(
+            credentialsId: awsCredentialId,
+            usernameVariable: 'AWS_ACCESS_KEY_ID',
+            passwordVariable: 'AWS_SECRET_ACCESS_KEY'
+        )
+        ]) {
+
+        stage('Validate AWS Account') {
+
             sh '''
                 set -e
+
                 aws sts get-caller-identity
             '''
         }
+
         stage('Bootstrap Terraform Backend') {
             if (!stateBucket?.trim()) { 
                 error( "stateBucket must be provided to the shared library." ) 
