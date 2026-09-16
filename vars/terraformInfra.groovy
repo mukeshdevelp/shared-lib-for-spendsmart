@@ -129,7 +129,7 @@ def call(Map config = [:]){
                 dir(terraformDir){
                     sh '''
                         set -e
-                        terraform destroy -auto-approve tfplan
+                        terraform apply -auto-approve tfplan
                     '''
                 }
             }
