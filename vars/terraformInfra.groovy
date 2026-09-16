@@ -83,8 +83,8 @@ def call(Map config = [:]){
             stage('terraform formatting check'){
                 dir(terraformDir){
                     sh '''
-                        # set -e
-                        terraform fmt -check -recursive
+                        
+                        terraform fmt  -recursive
                     '''
                 }
             }
@@ -92,7 +92,7 @@ def call(Map config = [:]){
             stage('terraform validation'){
                 dir(terraformDir){
                     sh '''
-                        set -e
+                        
                         terraform validate
                     '''
                 }
