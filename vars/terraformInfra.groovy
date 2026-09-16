@@ -1,4 +1,4 @@
-def call(Map config : []){
+def call(Map config = [:]){
     //configs
     def awsRegion = config.get('awsRegion' , 'us-east-1')
     def terraformDir = config.get('terraformDir', 'spendsmart')
