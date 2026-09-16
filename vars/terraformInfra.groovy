@@ -80,23 +80,23 @@ def call(Map config = [:]){
             }
         }
 
-        stage('terraform formatting check'){
-            dir(terraformDir){
-                sh '''
-                    set -e
-                    terraform fmt -check -recursive
-                '''
+            stage('terraform formatting check'){
+                dir(terraformDir){
+                    sh '''
+                        # set -e
+                        terraform fmt -check -recursive
+                    '''
+                }
             }
-        }
 
-        stage('terraform validation'){
-            dir(terraformDir){
-                sh '''
-                    set -e
-                    terraform validate
-                '''
+            stage('terraform validation'){
+                dir(terraformDir){
+                    sh '''
+                        set -e
+                        terraform validate
+                    '''
+                }
             }
-        }
         stage('Terraform Plan'){
             dir("${terraformDir}"){
                 if(action == 'apply'){
