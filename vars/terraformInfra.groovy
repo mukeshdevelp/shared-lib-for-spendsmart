@@ -49,7 +49,7 @@ def call(Map config = [:]){
                     echo "Terraform state bucket already exists." 
                 else 
                     echo "Creating Terraform state bucket..." 
-                    aws s3api create-bucket \ --bucket "${stateBucket}" \ --region "${stateRegion}" 
+                    aws s3api create-bucket  --bucket "${stateBucket}" -region "${stateRegion}" 
                     echo "Terraform state bucket created."
                 fi 
             """ 
