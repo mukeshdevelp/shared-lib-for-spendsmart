@@ -45,10 +45,7 @@ def call(Map config = [:]){
             sh """ 
                 set -e
                 echo "Checking Terraform state bucket..." 
-                if aws s3api head-bucket \ 
-                    --bucket "${stateBucket}" \ 
-                    2>/dev/null
-                then 
+                if aws s3api head-bucket \ --bucket "${stateBucket}" \ 2>/dev/null then
                     echo "Terraform state bucket already exists." 
                 else 
                     echo "Creating Terraform state bucket..." 
